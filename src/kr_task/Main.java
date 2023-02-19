@@ -23,10 +23,12 @@ public class Main {
         TaskService.remove(5);
         System.out.println(TaskService.returnNextDate(3));
 
-        System.out.println("========================");
+        System.out.println("=========================");
 
         TaskService.printAllTask();
-        System.out.println("========================");
+
+        System.out.println("=========================");
+
         LocalDate jostDate = LocalDate.of(2023, 2,22);
         TaskService.printDataTask(jostDate);
 
