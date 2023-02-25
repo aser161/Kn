@@ -21,37 +21,8 @@ public class TaskService {
         return false;
     }
 
-    public static boolean isTask (Task task, LocalDate date_) {
-
-        switch (task.getTimeTask()) {
-            case ONE:
-                if (TODAY.equals(date_)) {
-                    return true;
-                }
-                break;
-            case EVERY_DAY:
-                if (TODAY.getDayOfYear() <= date_.getDayOfYear()) {
-                    return true;
-                }
-                break;
-            case EVERY_WEEK:
-                if (TODAY.getDayOfYear() % 7 == date_.getDayOfYear() % 7
-                        && TODAY.getDayOfYear() <= date_.getDayOfYear()) {
-                    return true;
-                }
-                break;
-            case EVERY_MONTH:
-                if (TODAY.getDayOfMonth() == date_.getDayOfMonth()
-                        && TODAY.getDayOfYear() <= date_.getDayOfYear()) {
-                    return true;
-                }
-                break;
-            case EVERY_YEAR:
-                if (TODAY.getDayOfYear() == date_.getDayOfYear()) {
-                    return true;
-                }
-                break;
-        }
+    public static boolean isTask (Task task, LocalDate date) {
+        task.appearsIn(date);
         return false;
     }
 

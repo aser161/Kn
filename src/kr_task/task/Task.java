@@ -3,7 +3,7 @@ package kr_task.task;
 import java.time.LocalDate;
 import java.util.Objects;
 
-public class Task {
+public abstract class Task {
 
     public static final LocalDate TODAY = LocalDate.now();
     public static final LocalDate TOMORROW = LocalDate.now().plusDays(1);
@@ -31,10 +31,10 @@ public class Task {
 
     public enum TimeTask {
         ONE("Один раз"),
-        EVERY_DAY("Ежедневно"),
-        EVERY_WEEK("Еженедельно"),
-        EVERY_MONTH("Ежемесячно"),
-        EVERY_YEAR("Ежегодно");
+        DAILY("Ежедневно"),
+        WEEKLY("Еженедельно"),
+        MONTHLY("Ежемесячно"),
+        YEARLY("Ежегодно");
 
         private final String translate;
 
@@ -55,24 +55,20 @@ public class Task {
     private final String name;
     private final LocalDate date;
     private final TypeTask typeTask;
-    private final TimeTask timeTask;
+//    private final TimeTask timeTask;
     private final int id;
 
-    public Task(String name, LocalDate date, TypeTask typeTask, TimeTask timeTask) {
+    public Task(String name, LocalDate date, TypeTask typeTask) {
         this.name = name;
         this.date = date;
         this.typeTask = typeTask;
-        this.timeTask = timeTask;
         this.id = count;
         count++;
     }
 
-    public Task (String name, LocalDate date) {
-        this(name,date,TypeTask.PERSONAL,TimeTask.ONE);
-    }
 
     public LocalDate returnNextDate () {
-        if (this.timeTask == TimeTask.ONE){
+        if (this.getTimeTask() == TimeTask.ONE){
             return null;
         }
         LocalDate localDate = this.getDate().plusDays(1);
@@ -98,13 +94,14 @@ public class Task {
         return typeTask;
     }
 
-    public TimeTask getTimeTask() {
-        return timeTask;
-    }
+    public abstract TimeTask getTimeTask();
+
 
     public int getId() {
         return id;
     }
+
+    public abstract boolean appearsIn (LocalDate date);
 
     @Override
     public boolean equals(Object o) {
@@ -124,6 +121,6 @@ public class Task {
 
     @Override
     public String toString() {
-        return getName() + " " + getDate() + " порядковый номер: " + getId() + "; " + typeTask + ", " + timeTask;
+        return getName() + " " + getDate() + " порядковый номер: " + getId() + "; " + typeTask + ", " + getTimeTask();
     }
 }
